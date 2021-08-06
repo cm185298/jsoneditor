@@ -1,4 +1,5 @@
 'use strict'
+
 import { translate } from './i18n'
 
 /**
@@ -84,6 +85,27 @@ export class SearchBox {
     }
 
     divInput.appendChild(searchPrevious)
+
+    const divReplaceInput = document.createElement('div')
+    this.dom.replaceInput = divReplaceInput
+    divReplaceInput.className = 'jsoneditor-frame'
+    divReplaceInput.title = translate('replaceTitle')
+    wrapper.appendChild(divReplaceInput)
+
+    const replaceAll = document.createElement('button')
+    replaceAll.type = 'button'
+    replaceAll.className = 'jsoneditor-replaceall'
+    divReplaceInput.appendChild(replaceAll)
+
+    const replaceText = document.createElement('input')
+    replaceText.type = 'text'
+    console.log(replaceText)
+    this.dom.replaceText = replaceText
+
+    replaceAll.onclick = () => {
+      searchBox._onReplace()
+    }
+    divReplaceInput.appendChild(replaceText);
   }
 
   /**
@@ -283,6 +305,30 @@ export class SearchBox {
     if (keynum !== 27 && keynum !== 13) {
       // !show and !Enter
       this._onDelayedSearch(event) // For IE 9
+    }
+  }
+
+  _onReplace () {
+    const replaceWith = this.dom.replaceText.value
+    const results = this.results
+    console.log(i)
+    for(var i = 0; i < results.length; i++){
+      console.log(i)
+      console.log(results[i])
+      if (results[i].elem === "field"){
+        console.log("field")
+        var currValue = results[i].node.field
+        results[i].node.field = replaceWith
+        results[i].node.fieldInnerText = replaceWith
+        results[i].previousField = currValue
+      } else{
+        console.log("value")
+        var currValue = results[i].node.value
+        results[i].node.value = replaceWith
+        results[i].node.valueInnerText = replaceWith
+        results[i].previousValue = currValue
+      }
+      results[i].node.updateDom()
     }
   }
 
