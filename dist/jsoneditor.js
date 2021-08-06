@@ -14987,6 +14987,25 @@ var SearchBox = /*#__PURE__*/function () {
     };
 
     divInput.appendChild(searchPrevious);
+    var divReplaceInput = document.createElement('div');
+    this.dom.replaceInput = divReplaceInput;
+    divReplaceInput.className = 'jsoneditor-frame';
+    divReplaceInput.title = (0,i18n/* translate */.Iu)('replaceTitle');
+    wrapper.appendChild(divReplaceInput);
+    var replaceAll = document.createElement('button');
+    replaceAll.type = 'button';
+    replaceAll.className = 'jsoneditor-replaceall';
+    divReplaceInput.appendChild(replaceAll);
+    var replaceText = document.createElement('input');
+    replaceText.type = 'text';
+    console.log(replaceText);
+    this.dom.replaceText = replaceText;
+
+    replaceAll.onclick = function () {
+      searchBox._onReplace();
+    };
+
+    divReplaceInput.appendChild(replaceText);
   }
   /**
    * Go to the next search result
@@ -15216,6 +15235,34 @@ var SearchBox = /*#__PURE__*/function () {
         // !show and !Enter
         this._onDelayedSearch(event); // For IE 9
 
+      }
+    }
+  }, {
+    key: "_onReplace",
+    value: function _onReplace() {
+      var replaceWith = this.dom.replaceText.value;
+      var results = this.results;
+      console.log(i);
+
+      for (var i = 0; i < results.length; i++) {
+        console.log(i);
+        console.log(results[i]);
+
+        if (results[i].elem === "field") {
+          console.log("field");
+          var currValue = results[i].node.field;
+          results[i].node.field = replaceWith;
+          results[i].node.fieldInnerText = replaceWith;
+          results[i].previousField = currValue;
+        } else {
+          console.log("value");
+          var currValue = results[i].node.value;
+          results[i].node.value = replaceWith;
+          results[i].node.valueInnerText = replaceWith;
+          results[i].previousValue = currValue;
+        }
+
+        results[i].node.updateDom();
       }
     }
     /**
