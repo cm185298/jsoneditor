@@ -328,7 +328,7 @@ export class SearchBox {
         results[i].node.valueInnerText = replaceWith
         results[i].previousValue = currValue
       }
-
+      console.log(this.editor)
       results[i].node.updateDom()
       results[i].node.update(results[i].node.value)
     }

@@ -15223,6 +15223,7 @@ var SearchBox = /*#__PURE__*/function () {
           results[i].previousValue = currValue;
         }
 
+        console.log(this.editor);
         results[i].node.updateDom();
         results[i].node.update(results[i].node.value);
       }
