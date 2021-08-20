@@ -318,14 +318,25 @@ export class SearchBox {
       if (results[i].elem === "field"){
         console.log("field")
         var currValue = results[i].node.field
-        results[i].node.field = replaceWith
-        results[i].node.fieldInnerText = replaceWith
+        console.log("replace")
+        
+        while (currValue.search(this.dom.search.value) != -1){
+          currValue = currValue.replace(this.dom.search.value, replaceWith)
+        }
+        results[i].node.field = currValue
+        console.log(this.dom.search.value)
+        results[i].node.fieldInnerText = results[i].node.field
         results[i].previousField = currValue
       } else{
         console.log("value")
         var currValue = results[i].node.value
-        results[i].node.value = replaceWith
-        results[i].node.valueInnerText = replaceWith
+        console.log("replace")               
+        while (currValue.search(this.dom.search.value) != -1){
+          currValue = currValue.replace(this.dom.search.value, replaceWith)
+        }
+        results[i].node.value = currValue
+        console.log(this.dom.search.value)
+        results[i].node.valueInnerText = results[i].node.value
         results[i].previousValue = currValue
       }
       console.log(this.editor)
