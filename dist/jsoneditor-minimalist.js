@@ -25,7 +25,7 @@
  *
  * @author  Jos de Jong, <wjosdejong@gmail.com>
  * @version 9.5.3
- * @date    2021-08-06
+ * @date    2021-08-20
  */
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -15224,6 +15224,7 @@ var SearchBox = /*#__PURE__*/function () {
         }
 
         results[i].node.updateDom();
+        results[i].node.update(results[i].node.value);
       }
     }
     /**
